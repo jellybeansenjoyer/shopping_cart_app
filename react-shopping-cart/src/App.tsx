@@ -3,10 +3,12 @@ import { useQuery } from "react-query";
 //Components
 import Drawer from "@material-ui/core/Drawer";
 import { LinearProgress } from "@material-ui/core";
-import Grid from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Badge from "@material-ui/core";
 import { Wrapper } from "./App.styles";
+import Item from "./Item/item";
+
 //Types
 export type CartItemType = {
   id: number;
@@ -33,7 +35,16 @@ const App = () => {
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Oops...something went wrong ;-;</div>;
-  return <div className="App">Start</div>;
+  return (
+    <Wrapper>
+      <Grid container spacing={3}>
+        {data?.map(item => (
+          <Grid key={item.id} xs={12} sm={4}>
+            <Item item={item} handleAddToCart={handleAddToCart} />
+          </Grid>
+        ))}
+      </Grid>
+    </Wrapper>
+  );
 };
-
 export default App;
